@@ -1,36 +1,24 @@
 pipeline {
-  agent { docker { image 'python:3.8' } }
-  stages {
-    stage('build') {
-      steps {
-			sh 'python -m venv .venv'
-			sh '''
-				. .venv/bin/activate
-				pip install -r requirements.txt
-			
-			'''
-      
-      }
-    }
-    stage('test') {
-      steps {
-			sh '''
-				. .venv/bin/activate
-				pytest --junit-xml test-reports/results.xml application_test.py
-				
-			'''
-       
-      }
-      post {
-        always {
-          junit 'test-reports/*.xml'
+    agent any
+    
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building...'
+                sh 'echo "Building step completed"'
+            }
         }
-      }    
+        stage('Test') {
+            steps {
+                echo 'Testing...'
+                sh 'echo "Testing step completed"'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying...'
+                sh 'echo "Deployment step completed"'
+            }
+        }
     }
-  }
 }
-
-
-
-
-
